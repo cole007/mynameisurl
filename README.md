@@ -2,7 +2,7 @@
 
 Funky redirect gubbins for client
 
-![My Name is Url](resources/mynameisurl/icon.svg)
+![My Name is Url](resources/screenshots/plugin_logo.png)
 
 ## Installation
 

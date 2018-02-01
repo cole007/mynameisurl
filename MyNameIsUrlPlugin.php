@@ -142,9 +142,10 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     protected function defineSettings()
     {
-        return array(
-            'someSetting' => array(AttributeType::String, 'label' => 'Some Setting', 'default' => ''),
-        );
+        return false;
+        // return array(
+        //     'someSetting' => array(AttributeType::String, 'label' => 'Some Setting', 'default' => ''),
+        // );
     }
 
     /**
@@ -152,9 +153,11 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     public function getSettingsHtml()
     {
-       return craft()->templates->render('mynameisurl/MyNameIsUrl_Settings', array(
-           'settings' => $this->getSettings()
-       ));
+       return false;
+       
+       // return craft()->templates->render('mynameisurl/MyNameIsUrl_Settings', array(
+       //     'settings' => $this->getSettings()
+       // ));
     }
 
     /**

@@ -17,10 +17,24 @@
 {% includeCssResource "mynameisurl/css/MyNameIsUrl_Style.css" %}
 {% includeJsResource "mynameisurl/js/MyNameIsUrl_Script.js" %}
 
-{{ forms.textField({
-    label: 'Some Setting',
+{% set cols = 
+	{'src':{
+	'heading':'From',
+	'name':'from',
+	'type':'singleline'
+	},
+	'dest':{
+	'heading':'To',
+	'name':'to',
+	'type':'singleline'
+	}}
+ %}
+
+{{ forms.editableTable({
+    label: 'Redirects',
     instructions: 'Enter some setting here.',
-    id: 'someSetting',
-    name: 'someSetting', 
-    value: settings['someSetting']})
+    id: 'redirects',
+    cols: cols,
+    name: 'redirects', 
+    rows: settings['redirects']})
 }}

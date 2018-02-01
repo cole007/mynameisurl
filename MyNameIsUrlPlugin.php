@@ -18,26 +18,43 @@ class MyNameIsUrlPlugin extends BasePlugin
     /**
      * @return mixed
      */
+    
+    private $pageUrl;
+    private $redir = false;
     public function init()
     {
+        $this->pageUrl = craft()->request->getUrl();
+
         parent::init();
         craft()->on('plugins.onLoadPlugins', function(Event $event) {
 
-            $redir = false;
+            $this->pageUrl = craft()->request->getUrl();
 
-            $pageUrl = craft()->request->getUrl();
             $filter = 'index.php?p=';
-            $indexPos = strpos($pageUrl,$filter);
-            $pageUrlLower = strtolower($pageUrl);
+            $indexPos = strpos($this->pageUrl,$filter);
+            $pageUrlLower = strtolower($this->pageUrl);
+            
+            $settings = $this->getSettings();
+            $redirects = $settings['redirects'];
+            
+            $tmp = array_filter($redirects, function($v) {
+                // check for wildcards here (*)?
+                if (strrpos($v['src'],'*') !== false) {
+                    $tmp = str_replace('*','',$v['src']);
+                    if (strpos($this->pageUrl,$tmp) === 0) $this->redir = $v['dest'];    
+                }
+                if ($v['src'] == $this->pageUrl) $this->redir = $v['dest'];                
+            });
+            
             // if index.php in URL then …
             if ($indexPos !== false) {
-                $redir = substr($pageUrl,(strlen($filter)+$indexPos));                
+                $this->redir = substr($this->pageUrl,(strlen($filter)+$indexPos));                
             // if pageUrl contains uppercase characters then …
-            } elseif ($pageUrl !== $pageUrlLower) {
-                $redir = $pageUrlLower;
+            } elseif ($this->pageUrl !== $pageUrlLower) {
+                $this->redir = $pageUrlLower;
             }
 
-            if ($redir) craft()->request->redirect($redir,true,301);
+            if ($this->redir) craft()->request->redirect($this->redir,true,301);
         });
     }
 
@@ -142,10 +159,9 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     protected function defineSettings()
     {
-        return false;
-        // return array(
-        //     'someSetting' => array(AttributeType::String, 'label' => 'Some Setting', 'default' => ''),
-        // );
+        return array(
+            'redirects' => array(AttributeType::String, 'label' => 'Redirects', 'default' => ''),
+        );
     }
 
     /**
@@ -153,11 +169,9 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     public function getSettingsHtml()
     {
-       return false;
-       
-       // return craft()->templates->render('mynameisurl/MyNameIsUrl_Settings', array(
-       //     'settings' => $this->getSettings()
-       // ));
+       return craft()->templates->render('mynameisurl/MyNameIsUrl_Settings', array(
+           'settings' => $this->getSettings()
+       ));
     }
 
     /**
@@ -168,7 +182,13 @@ class MyNameIsUrlPlugin extends BasePlugin
     public function prepSettings($settings)
     {
         // Modify $settings here...
-
+        $redir = $settings['redirects'];
+        foreach ($redir AS $key => $row) {
+            $int = substr($row['src'],0,1);
+            if ($int !== '/') $redir[$key]['src'] = '/' . $row['src'];
+            if ($row['src'] == '' || $row['dest'] == '') unset($redir[$key]);
+        }
+        $settings['redirects'] = $redir;
         return $settings;
     }
 

@@ -38,6 +38,8 @@ Click install. That is all
 
 ## My Name is Url Roadmap
 
-* Add some settings. Maybe
+* Migrate redirects to user-accessible template(s)
+* Add enable/disable option for case-sensitive rewrites
+* Add enable/disable option for `index.php?p=` rewrites
 
 Brought to you by [@cole007](http://ournameismud.co.uk/)

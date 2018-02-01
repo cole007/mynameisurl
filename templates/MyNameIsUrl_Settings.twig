@@ -1,0 +1,26 @@
+{#
+/**
+ * My Name is Url plugin for Craft CMS
+ *
+ * My Name is Url Settings.twig
+ *
+ * @author    @cole007
+ * @copyright Copyright (c) 2018 @cole007
+ * @link      http://ournameismud.co.uk/
+ * @package   MyNameIsUrl
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% includeCssResource "mynameisurl/css/MyNameIsUrl_Style.css" %}
+{% includeJsResource "mynameisurl/js/MyNameIsUrl_Script.js" %}
+
+{{ forms.textField({
+    label: 'Some Setting',
+    instructions: 'Enter some setting here.',
+    id: 'someSetting',
+    name: 'someSetting', 
+    value: settings['someSetting']})
+}}

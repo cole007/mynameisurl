@@ -1,0 +1,14 @@
+{
+	"name": "/mynameisurl",
+	"description": "Funky redirect gubbins for client",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "@cole007",
+			"homepage": "http://ournameismud.co.uk/"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}

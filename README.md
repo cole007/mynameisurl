@@ -34,7 +34,7 @@ Of course, it is much more desirable to set redirects in your sites `.htaccess` 
 
 ## Using My Name is Url
 
-Click instsall. That is all
+Click install. That is all
 
 ## My Name is Url Roadmap
 

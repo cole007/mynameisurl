@@ -36,7 +36,7 @@ class MyNameIsUrlPlugin extends BasePlugin
             
             $settings = $this->getSettings();
             $redirects = $settings['redirects'];
-            
+            $redirects = is_array($redirects) ? $redirects : array();
             $tmp = array_filter($redirects, function($v) {
                 // check for wildcards here (*)?
                 if (strrpos($v['src'],'*') !== false) {
@@ -95,7 +95,7 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.1';
+        return '1.0.0';
     }
 
     /**
@@ -103,7 +103,7 @@ class MyNameIsUrlPlugin extends BasePlugin
      */
     public function getSchemaVersion()
     {
-        return '1.0.1';
+        return '1.0.0';
     }
 
     /**
